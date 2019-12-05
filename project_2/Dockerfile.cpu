@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 ENV LANG="C.UTF-8" LC_ALL="C.UTF-8" PATH="/opt/venv/bin:$PATH" PIP_NO_CACHE_DIR="false" CFLAGS="-mavx2 -mf16c" CXXFLAGS="-mavx2 -mf16c"
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    python3 python3-pip python3-venv python3-dev wget make g++ libblas-dev liblapack-dev swig patch unzip nano && \
+    python3 python3-pip python3-venv python3-dev wget curl make g++ libblas-dev liblapack-dev swig patch unzip nano && \
     rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -24,9 +24,15 @@ COPY ./agent/ ./agent/
 COPY main.py .
 COPY Continuous_Control.ipynb .
 
+RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
+RUN rm Miniconda3-latest-Linux-x86_64.sh
+ENV PATH=/miniconda/bin:${PATH}
+RUN conda update -y conda
+
 RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
     unzip Reacher_Linux_NoVis.zip && \
-    pip3 install -r requirements.txt
+    conda install --yes --file requirements.txt
 
 EXPOSE 5000
 EXPOSE 8888
