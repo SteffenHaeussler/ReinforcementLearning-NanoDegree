@@ -30,10 +30,10 @@ RUN rm Miniconda3-latest-Linux-x86_64.sh
 ENV PATH=/miniconda/bin:${PATH}
 RUN conda update -y conda
 
-RUN conda install -y -c pytorch \
-    cudatoolkit=10.0 \
-    "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0" \
-    "torchvision=0.4.0=py36_cu100"
+RUN conda install -y -c pytorch
+RUN conda install -y -c    cudatoolkit=10.0
+RUN conda install -y -c    "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0"
+RUN conda install -y -c    "torchvision=0.4.0=py36_cu100"
 
 RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
     unzip Reacher_Linux_NoVis.zip && \
