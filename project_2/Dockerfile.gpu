@@ -42,7 +42,7 @@ RUN conda install -c pytorch magma-cuda90 # or [magma-cuda92 | magma-cuda100 | m
 RUN cd /usr/src/app
 RUN git clone --recursive https://github.com/pytorch/pytorch
 RUN export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
-RUN /usr/src/app/pytorch
+RUN cd /usr/src/app/pytorch
 RUN python3 setup.py install
 
 RUN cd /usr/src/app
