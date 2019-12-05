@@ -24,17 +24,18 @@ COPY ./agent/ ./agent/
 COPY main.py .
 COPY Continuous_Control.ipynb .
 
-RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
-RUN rm Miniconda3-latest-Linux-x86_64.sh
-ENV PATH=/miniconda/bin:${PATH}
-RUN conda update -y conda
-
-RUN conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+# RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# RUN bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b
+# RUN rm Miniconda3-latest-Linux-x86_64.sh
+# ENV PATH=/miniconda/bin:${PATH}
+# RUN conda update -y conda
 
 RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
     unzip Reacher_Linux_NoVis.zip && \
     pip3 install -r requirements.txt
+
+# RUN conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
+RUN pip3 install torch torchvision
 
 EXPOSE 5000
 EXPOSE 8888
