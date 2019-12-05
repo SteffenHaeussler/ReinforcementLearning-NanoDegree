@@ -30,23 +30,22 @@ RUN rm Miniconda3-latest-Linux-x86_64.sh
 ENV PATH=/miniconda/bin:${PATH}
 RUN conda update -y conda
 
-# update conda
-RUN conda update conda && \
-    conda install numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing
-
-# CUDA 10.0-specific steps
-RUN conda install -y -c pytorch \
-    cudatoolkit=10.0 \
-    "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0" \
-    "torchvision=0.4.0=py36_cu100"
-
-# Install HDF5 Python bindings
-RUN conda install -y h5py=2.8.0
-RUN pip install h5py-cache==1.0
-
 RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
     unzip Reacher_Linux_NoVis.zip && \
     pip3 install -r requirements.txt
+
+# update conda
+RUN conda update conda && \
+    conda install numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing
+RUN conda install -c pytorch magma-cuda90 # or [magma-cuda92 | magma-cuda100 | magma-cuda101 ] depending on your cuda version
+
+RUN cd /usr/src/app
+RUN git clone --recursive https://github.com/pytorch/pytorch
+RUN export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
+RUN /usr/src/app/pytorch
+RUN python3 setup.py install
+
+RUN cd /usr/src/app
 
 EXPOSE 5000
 EXPOSE 8888
