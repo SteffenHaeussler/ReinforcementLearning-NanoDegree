@@ -32,7 +32,7 @@ RUN conda update -y conda
 
 RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
     unzip Reacher_Linux_NoVis.zip && \
-    conda install --yes --file requirements.txt
+    pip3 install -r requirements.txt
 
 EXPOSE 5000
 EXPOSE 8888
