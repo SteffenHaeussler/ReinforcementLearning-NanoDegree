@@ -30,10 +30,6 @@ RUN rm Miniconda3-latest-Linux-x86_64.sh
 ENV PATH=/miniconda/bin:${PATH}
 RUN conda update -y conda
 
-RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
-    unzip Reacher_Linux_NoVis.zip && \
-    pip3 install -r requirements.txt
-
 # update conda
 RUN conda update conda && \
     conda install numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing
@@ -42,13 +38,15 @@ RUN conda update conda && \
 RUN conda install -y -c pytorch \
     cudatoolkit=10.0 \
     "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0" \
-    "torchvision=0.4.0=py36_cu100" \
-    && conda clean -ya
+    "torchvision=0.4.0=py36_cu100"
 
 # Install HDF5 Python bindings
-RUN conda install -y h5py=2.8.0 \
-    && conda clean -ya
+RUN conda install -y h5py=2.8.0
 RUN pip install h5py-cache==1.0
+
+RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
+    unzip Reacher_Linux_NoVis.zip && \
+    pip3 install -r requirements.txt
 
 EXPOSE 5000
 EXPOSE 8888
