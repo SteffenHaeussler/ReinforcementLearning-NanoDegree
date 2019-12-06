@@ -22,16 +22,14 @@ COPY ./curricula/ ./curricula/
 
 COPY Navigation-rainbow.ipynb .
 
-RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip && \
-    unzip Reacher_Linux_NoVis.zip && \
+
+RUN wget -q https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip && \
+    unzip Banana_Linux_NoVis.zip && \
     pip3 install -r requirements.txt
 
-# RUN conda install pytorch torchvision cudatoolkit=10.1 -c pytorch
 RUN pip3 install torch torchvision
 
 EXPOSE 5000
 EXPOSE 8888
 
 ENTRYPOINT ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
-
-
