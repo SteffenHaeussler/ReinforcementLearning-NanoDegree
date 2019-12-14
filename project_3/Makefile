@@ -1,4 +1,4 @@
-dockerimage ?= deep-rl/cc2-pytorch
+dockerimage ?= deep-rl/tennis-pytorch
 dockerfile ?= Dockerfile.cpu
 srcdir ?= $(shell pwd)
 datadir ?= $(shell pwd)
